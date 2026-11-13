@@ -1,0 +1,395 @@
+/* EcoCollect — Forms & Multi-Step Wizard Styles
+   Includes AI E-Waste Classifier Card & Media Uploads */
+
+/* Multi-Step Wizard Navigation */
+.wizard-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.wizard-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.wizard-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-surface-warm);
+  border: 1.5px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-body);
+}
+
+.wizard-step.active {
+  color: var(--color-primary);
+}
+
+.wizard-step.active .wizard-step-num {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 4px var(--bg-mint);
+}
+
+.wizard-step.completed {
+  color: var(--color-primary);
+}
+
+.wizard-step.completed .wizard-step-num {
+  background: var(--color-sage-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.wizard-divider {
+  flex-grow: 1;
+  height: 2px;
+  background: var(--border-subtle);
+  margin: 0 1rem;
+}
+
+/* Category Grid Selector */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.category-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.category-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.category-card {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+}
+
+.category-card i {
+  font-size: 1.8rem;
+  color: var(--color-primary);
+}
+
+.category-card span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.category-option:hover .category-card {
+  border-color: var(--color-primary);
+  background: var(--bg-surface-tint);
+  transform: translateY(-2px);
+}
+
+.category-option input:checked + .category-card {
+  border-color: var(--color-primary);
+  background: var(--bg-mint);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* Condition Option Selector */
+.condition-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.condition-card {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--bg-surface);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+}
+
+.condition-card:hover {
+  border-color: var(--color-primary);
+}
+
+.condition-option input:checked + .condition-card {
+  background: var(--bg-mint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Time Slot Grid */
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.slot-card {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slot-card i {
+  font-size: 1.35rem;
+  color: var(--color-accent-lavender);
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.slot-card span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: block;
+}
+
+.slot-card small {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.slot-option input:checked + .slot-card {
+  border-color: var(--color-accent-lavender);
+  background: var(--color-accent-lavender-soft);
+  box-shadow: 0 0 0 2px var(--color-accent-lavender);
+}
+
+/* AI E-Waste Classification Box (Retro-Botanical AI Style) */
+.ai-classifier-box {
+  background: linear-gradient(135deg, #FAF7F0 0%, #EBF5ED 100%);
+  border: 1.5px dashed var(--color-primary);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--color-accent-lavender);
+  color: #FFFFFF;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.ai-upload-dropzone {
+  border: 1.5px dashed var(--border-accent);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ai-upload-dropzone:hover {
+  background: var(--bg-mint-soft);
+  border-color: var(--color-primary);
+}
+
+.ai-dropzone-icon {
+  font-size: 2.25rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.ai-sample-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.ai-sample-pill {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ai-sample-pill:hover {
+  background: var(--bg-mint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* AI Result Card */
+.ai-result-card {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  display: none;
+  animation: scaleUp 0.25s ease;
+}
+
+.ai-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.ai-result-item {
+  background: var(--bg-surface-tint);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+}
+
+.ai-result-item span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.ai-result-item strong {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+/* AI Scanner Loader */
+.ai-scanning-overlay {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.ai-scan-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-surface-warm);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.ai-scan-progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-lavender));
+  transition: width 0.3s ease;
+}
+
+/* Review Summary Card */
+.review-summary-card {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.review-section {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.review-section:last-child {
+  border-bottom: none;
+}
+
+.review-section h4 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.review-item span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.review-item strong {
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.eco-points-preview {
+  background: var(--bg-mint);
+  border: 1.5px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.eco-points-preview h3 {
+  color: var(--color-primary);
+  font-size: 1.8rem;
+}
+

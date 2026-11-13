@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco Points & Rewards — EcoCollect</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/tables.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon"><i class="fas fa-leaf"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag">CITIZEN PORTAL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="request.html"><i class="fas fa-calendar-plus"></i> <span>Request Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-list-alt"></i> <span>My Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="tracking.html"><i class="fas fa-location-arrow"></i> <span>Track Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rating.html"><i class="fas fa-star"></i> <span>Ratings & Feedback</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rewards.html" class="active"><i class="fas fa-gift"></i> <span>Eco Rewards</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="profile.html"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title">
+            <h1>Eco Points & Environmental Impact</h1>
+            <p>Every kilogram of electronic waste diverted earns real-world perks.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eco Points Highlight Hero Card -->
+      <div style="background: linear-gradient(135deg, #FAF7F0 0%, #EBF5ED 60%, #F5EFEB 100%); border: 1.5px solid var(--border-accent); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+        <div>
+          <span class="badge badge-leaf" style="margin-bottom: 0.5rem;"><i class="fas fa-coins"></i> REWARDS BALANCE</span>
+          <h1 style="font-size: 3.5rem; color: var(--color-primary); line-height: 1; margin: 0.25rem 0;">
+            <span id="eco-balance-display">480</span> <small style="font-size: 1.5rem; font-family: var(--font-body); color: var(--text-muted);">Points</small>
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+            Earn 10 points per kilogram + special device category multipliers.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 1.25rem 1.75rem; border-radius: var(--radius-lg); text-align: center; min-width: 140px;">
+            <div style="color: var(--color-primary); font-size: 1.6rem; font-weight: 700; font-family: var(--font-display);" id="stat-recycled-kg">18.5 kg</div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">E-Waste Recycled</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 1.25rem 1.75rem; border-radius: var(--radius-lg); text-align: center; min-width: 140px;">
+            <div style="color: var(--color-accent-lavender); font-size: 1.6rem; font-weight: 700; font-family: var(--font-display);" id="stat-co2-saved">26.6 kg</div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">CO₂ Emissions Offset</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 1.25rem 1.75rem; border-radius: var(--radius-lg); text-align: center; min-width: 140px;">
+            <div style="color: var(--color-amber); font-size: 1.6rem; font-weight: 700; font-family: var(--font-display);" id="stat-trees-equiv">1.2</div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Trees Equiv. Absorbed</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 1.25rem 1.75rem; border-radius: var(--radius-lg); text-align: center; min-width: 140px;">
+            <div style="color: var(--color-primary); font-size: 1.6rem; font-weight: 700; font-family: var(--font-display);" id="stat-toxic-diverted">1.48 kg</div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Toxic Metals Kept Out</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards Catalog Section -->
+      <div class="section-header">
+        <h3><i class="fas fa-store" style="color: var(--color-primary);"></i> Redeem Rewards Catalog</h3>
+      </div>
+
+      <div class="stats-grid" id="rewards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <!-- Dynamically populated by rewards.js -->
+      </div>
+
+      <!-- Redemption History Table -->
+      <div class="card" style="margin-top: 2.5rem;">
+        <div class="section-header">
+          <h3><i class="fas fa-receipt" style="color: var(--color-primary);"></i> My Claimed Vouchers</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reward Title</th>
+                <th>Voucher Promo Code</th>
+                <th>Points Deducted</th>
+                <th>Date Claimed</th>
+              </tr>
+            </thead>
+            <tbody id="redemption-history-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Claim Reward Modal -->
+  <div class="modal-overlay" id="reward-claim-modal">
+    <div class="modal-card" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('reward-claim-modal')">&times;</button>
+      
+      <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--color-accent-lavender-soft); color: var(--color-accent-lavender); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem;">
+        <i class="fas fa-gift"></i>
+      </div>
+
+      <span class="badge badge-lavender" style="margin-bottom: 0.5rem;">REWARD UNLOCKED</span>
+      <h3 id="claimed-reward-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">₹50 Green Groceries Coupon</h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Use this exclusive voucher code at partner stores or digital checkouts.
+      </p>
+
+      <div style="background: var(--bg-surface-tint); border: 2px dashed var(--border-accent); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <strong id="claimed-voucher-code" style="font-family: monospace; font-size: 1.25rem; color: var(--color-primary); letter-spacing: 0.05em;">ECO50-ORGANIC-8821</strong>
+        <button class="btn btn-secondary btn-sm" onclick="copyVoucherCode()">
+          <i class="fas fa-copy"></i> Copy
+        </button>
+      </div>
+
+      <span id="claimed-points-left" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 1.5rem;">
+        480 points remaining
+      </span>
+
+      <button class="btn btn-primary btn-block" onclick="closeModal('reward-claim-modal')">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/rewards.js"></script>
+</body>
+</html>
+

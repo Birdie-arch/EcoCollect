@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management — EcoCollect Admin</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/tables.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon" style="background: #14241B;"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag" style="background: var(--bg-surface-warm); color: var(--text-main);">CITY CONTROL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-chart-line"></i> <span>Overview</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="users.html" class="active"><i class="fas fa-users"></i> <span>Users</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="collectors.html"><i class="fas fa-truck-pickup"></i> <span>Collectors</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-clipboard-list"></i> <span>Pickup Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="analytics.html"><i class="fas fa-chart-pie"></i> <span>Analytics Deep Dive</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="recycling-centers.html"><i class="fas fa-map-marked-alt"></i> <span>City Map & Centers</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title">
+            <h1>Citizen & Operator Directory</h1>
+            <p>Manage verified user accounts, roles, and eco points balances.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="table-toolbar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-users" class="form-control" placeholder="Search by name, email, phone number...">
+        </div>
+
+        <div class="filter-group">
+          <select id="filter-user-role" class="filter-select">
+            <option value="ALL">All Roles</option>
+            <option value="USER">Citizens</option>
+            <option value="COLLECTOR">Collectors</option>
+            <option value="ADMIN">Admins</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Role</th>
+              <th>City Zone</th>
+              <th>Eco Points</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-table-body">
+            <!-- Injected by admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
+

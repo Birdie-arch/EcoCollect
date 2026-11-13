@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Pickup Tracking — EcoCollect</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+
+  <style>
+    .tracking-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon"><i class="fas fa-leaf"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag">CITIZEN PORTAL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="request.html"><i class="fas fa-calendar-plus"></i> <span>Request Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-list-alt"></i> <span>My Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="tracking.html" class="active"><i class="fas fa-location-arrow"></i> <span>Track Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rating.html"><i class="fas fa-star"></i> <span>Ratings & Feedback</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rewards.html"><i class="fas fa-gift"></i> <span>Eco Rewards</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="profile.html"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title">
+            <h1>Live Pickup Tracking</h1>
+            <p>Real-time vehicle telemetry and circular recycling journey.</p>
+          </div>
+        </div>
+
+        <div class="top-bar-actions">
+          <!-- Request Selector Dropdown -->
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Tracking:</label>
+            <select id="tracking-request-select" class="form-select" style="min-width: 240px; padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7-Step Progress Timeline (Section 8) -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+          <h4 style="margin: 0; font-size: 1.15rem;">Collection Lifecycle Progress</h4>
+          <div id="track-status-badge">
+            <span class="badge badge-on_the_way">ON THE WAY</span>
+          </div>
+        </div>
+
+        <div class="tracking-stepper">
+          <div class="step-item completed" id="step-req">
+            <div class="step-circle"><i class="fas fa-file-alt"></i></div>
+            <div class="step-label">1. Requested</div>
+          </div>
+
+          <div class="step-item completed" id="step-asg">
+            <div class="step-circle"><i class="fas fa-user-check"></i></div>
+            <div class="step-label">2. Assigned</div>
+          </div>
+
+          <div class="step-item completed" id="step-acc">
+            <div class="step-circle"><i class="fas fa-thumbs-up"></i></div>
+            <div class="step-label">3. Accepted</div>
+          </div>
+
+          <div class="step-item active" id="step-way">
+            <div class="step-circle"><i class="fas fa-truck-moving"></i></div>
+            <div class="step-label">4. On The Way</div>
+          </div>
+
+          <div class="step-item" id="step-arr">
+            <div class="step-circle"><i class="fas fa-map-pin"></i></div>
+            <div class="step-label">5. Arrived</div>
+          </div>
+
+          <div class="step-item" id="step-col">
+            <div class="step-circle"><i class="fas fa-weight-hanging"></i></div>
+            <div class="step-label">6. Collected</div>
+          </div>
+
+          <div class="step-item" id="step-cmp">
+            <div class="step-circle"><i class="fas fa-check-circle"></i></div>
+            <div class="step-label">7. Completed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Cards Grid -->
+      <div class="tracking-meta-grid">
+        <!-- Assigned Collector Card -->
+        <div class="card" style="border-color: var(--border-accent);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+            <span class="badge badge-lavender">FIELD OPERATOR</span>
+            <span style="color: #F59E0B; font-weight: 700; font-size: 0.9rem;" id="track-collector-rating">★ 4.9</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary);">
+            <div>
+              <h4 id="track-collector-name" style="margin: 0 0 2px;">Rajesh Kumar</h4>
+              <span id="track-collector-vehicle" style="font-size: 0.8rem; color: var(--text-muted);">Eco Van (KA-03-EV-1044)</span>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface-tint); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.825rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: var(--text-muted);">Estimated Arrival:</span>
+            <strong id="track-eta" style="color: var(--color-primary); font-size: 1.05rem; font-family: var(--font-display);">~12 mins</strong>
+          </div>
+        </div>
+
+        <!-- Request Summary Card -->
+        <div class="card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+            <span class="badge badge-leaf">PICKUP DETAILS</span>
+            <strong id="track-req-id" style="color: var(--color-primary); font-family: var(--font-display);">EC-2026-000124</strong>
+          </div>
+
+          <div style="font-size: 0.88rem; line-height: 1.6;">
+            <div><strong>Device:</strong> <span id="track-device-name">Dell Inspiron 15 (Laptop)</span></div>
+            <div><strong>Address:</strong> <span id="track-address">42, Green Glen Layout, Bellandur</span></div>
+            <div><strong>Scheduled:</strong> <span id="track-scheduled">2026-11-12 | 09:00 AM – 12:00 PM</span></div>
+          </div>
+
+          <div style="margin-top: 1.25rem;">
+            <a href="#" id="rate-service-cta" class="btn btn-primary btn-block btn-sm" style="display: none;">
+              <i class="fas fa-star"></i> Rate Collection Experience
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Leaflet Map & Simulator Controls -->
+      <div class="card">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+          <div>
+            <h4 style="margin: 0; font-size: 1.15rem;"><i class="fas fa-map-marked-alt" style="color: var(--color-primary);"></i> Real-Time Telemetry Map</h4>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Showing Collector (Lavender) ➔ Your Doorstep (Green) ➔ Recycling Plant (Dark Green)</span>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-lavender btn-sm" id="sim-move-btn" onclick="simulateLiveCollectorMovement()">
+              <i class="fas fa-play"></i> Simulate Vehicle Movement
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="fastSimulateTransition('ARRIVED')">
+              Simulate Arrived
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="fastSimulateTransition('COMPLETED')">
+              Simulate Completed
+            </button>
+          </div>
+        </div>
+
+        <div id="tracking-live-map" style="height: 440px; width: 100%;"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/tracking.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Pickup — EcoCollect</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon"><i class="fas fa-leaf"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag">CITIZEN PORTAL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="request.html" class="active"><i class="fas fa-calendar-plus"></i> <span>Request Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-list-alt"></i> <span>My Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="tracking.html"><i class="fas fa-location-arrow"></i> <span>Track Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rating.html"><i class="fas fa-star"></i> <span>Ratings & Feedback</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rewards.html"><i class="fas fa-gift"></i> <span>Eco Rewards</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="profile.html"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title">
+            <h1>Schedule Doorstep E-Waste Collection</h1>
+            <p>Our certified green fleet will arrive at your address with calibrated digital scales.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Step Wizard Navigation Header -->
+      <div class="wizard-steps">
+        <div class="wizard-step active" id="step-nav-1">
+          <div class="wizard-step-num">1</div>
+          <span>E-Waste Details</span>
+        </div>
+        <div class="wizard-divider"></div>
+        <div class="wizard-step" id="step-nav-2">
+          <div class="wizard-step-num">2</div>
+          <span>Pickup Location</span>
+        </div>
+        <div class="wizard-divider"></div>
+        <div class="wizard-step" id="step-nav-3">
+          <div class="wizard-step-num">3</div>
+          <span>Date & Time Slot</span>
+        </div>
+        <div class="wizard-divider"></div>
+        <div class="wizard-step" id="step-nav-4">
+          <div class="wizard-step-num">4</div>
+          <span>Review & Confirm</span>
+        </div>
+      </div>
+
+      <!-- STEP 1: E-Waste Details -->
+      <div class="wizard-pane" id="pane-step-1">
+        <!-- AI Classifier Box (Section 12) -->
+        <div class="ai-classifier-box">
+          <div class="ai-header">
+            <div>
+              <span class="ai-badge"><i class="fas fa-magic"></i> AI ECOVISION ASSISTANT</span>
+              <h3 style="font-size: 1.25rem; margin-top: 0.35rem;">Smart Electronic Waste Classifier</h3>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Prototype Vision API v2.4</span>
+          </div>
+
+          <p style="font-size: 0.88rem; color: var(--text-body); margin-bottom: 1rem;">
+            Upload a photo of your electronic item to automatically detect object category, estimate weight, and flag hazardous elements.
+          </p>
+
+          <input type="file" id="ai-file-input" accept="image/*" style="display: none;">
+          <div class="ai-upload-dropzone" id="ai-dropzone">
+            <div class="ai-dropzone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <strong style="color: var(--text-main); font-size: 0.95rem;">Drag & drop device image or click to browse</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Supports JPG, PNG, WEBP</p>
+          </div>
+
+          <!-- 1-Click Sample Previews for Tester Convenience -->
+          <div style="text-align: center; margin-top: 1rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Or test with sample electronics:</span>
+            <div class="ai-sample-pills">
+              <button type="button" class="ai-sample-pill" data-sample="laptop"><i class="fas fa-laptop"></i> Sample: Old Laptop</button>
+              <button type="button" class="ai-sample-pill" data-sample="phone"><i class="fas fa-mobile-alt"></i> Sample: Cracked Smartphone</button>
+              <button type="button" class="ai-sample-pill" data-sample="tv"><i class="fas fa-tv"></i> Sample: LED Television</button>
+              <button type="button" class="ai-sample-pill" data-sample="battery"><i class="fas fa-car-battery"></i> Sample: Inverter Battery</button>
+              <button type="button" class="ai-sample-pill" data-sample="printer"><i class="fas fa-print"></i> Sample: Office Printer</button>
+            </div>
+          </div>
+
+          <!-- Scanning Overlay -->
+          <div class="ai-scanning-overlay" id="ai-scanner-overlay">
+            <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i>
+            <h5 style="margin: 0.75rem 0 0.25rem;">Analyzing image with EcoVision Model...</h5>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Running neural edge inference for material recognition</p>
+            <div class="ai-scan-bar">
+              <div class="ai-scan-progress" id="ai-progress-bar"></div>
+            </div>
+          </div>
+
+          <!-- Classification Output Card -->
+          <div class="ai-result-card" id="ai-result-card">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="badge badge-leaf"><i class="fas fa-check"></i> Analysis Successful</span>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary);">Confidence: <span id="ai-res-confidence">98%</span></span>
+            </div>
+            
+            <div class="ai-result-grid">
+              <div class="ai-result-item">
+                <span>Detected Object</span>
+                <strong id="ai-res-object">Laptop</strong>
+              </div>
+              <div class="ai-result-item">
+                <span>E-Waste Category</span>
+                <strong id="ai-res-category">Laptop</strong>
+              </div>
+              <div class="ai-result-item">
+                <span>Surface Condition</span>
+                <strong id="ai-res-condition">Used</strong>
+              </div>
+              <div class="ai-result-item">
+                <span>Recommended Action</span>
+                <strong id="ai-res-action">Refurbish / Recycle</strong>
+              </div>
+              <div class="ai-result-item" style="grid-column: 1 / -1; background: #FEF3C7; border: 1px solid #FDE68A;">
+                <span style="color: #92400E; font-weight: 700;"><i class="fas fa-exclamation-triangle"></i> Potential Hazardous Element:</span>
+                <strong style="color: #B45309;" id="ai-res-hazard">Lithium Battery</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manual Form Inputs -->
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">Select E-Waste Category</label>
+            <div class="category-grid">
+              <label class="category-option">
+                <input type="radio" name="category" value="Laptop" checked>
+                <div class="category-card">
+                  <i class="fas fa-laptop"></i>
+                  <span>Laptop</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Mobile Phone">
+                <div class="category-card">
+                  <i class="fas fa-mobile-alt"></i>
+                  <span>Mobile Phone</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Desktop">
+                <div class="category-card">
+                  <i class="fas fa-desktop"></i>
+                  <span>Desktop PC</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Monitor">
+                <div class="category-card">
+                  <i class="fas fa-display"></i>
+                  <span>Monitor</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Television">
+                <div class="category-card">
+                  <i class="fas fa-tv"></i>
+                  <span>Television</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Refrigerator">
+                <div class="category-card">
+                  <i class="fas fa-snowflake"></i>
+                  <span>Refrigerator</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Washing Machine">
+                <div class="category-card">
+                  <i class="fas fa-soap"></i>
+                  <span>Washing Machine</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Printer">
+                <div class="category-card">
+                  <i class="fas fa-print"></i>
+                  <span>Printer</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Keyboard">
+                <div class="category-card">
+                  <i class="fas fa-keyboard"></i>
+                  <span>Keyboard</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Mouse">
+                <div class="category-card">
+                  <i class="fas fa-mouse"></i>
+                  <span>Mouse</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Battery">
+                <div class="category-card">
+                  <i class="fas fa-car-battery"></i>
+                  <span>Battery</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Charger">
+                <div class="category-card">
+                  <i class="fas fa-plug"></i>
+                  <span>Charger</span>
+                </div>
+              </label>
+
+              <label class="category-option">
+                <input type="radio" name="category" value="Other">
+                <div class="category-card">
+                  <i class="fas fa-microchip"></i>
+                  <span>Other Hardware</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="device-name-input">Device Name / Model</label>
+            <input type="text" id="device-name-input" class="form-control" placeholder="e.g. Dell Inspiron 15 (Old Core i5)" value="Dell Inspiron 15" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="qty-input">Quantity (Units)</label>
+              <input type="number" id="qty-input" class="form-control" min="1" max="20" value="1" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="weight-input">Estimated Weight (kg)</label>
+              <input type="number" id="weight-input" class="form-control" step="0.1" min="0.1" value="2.2" required>
+              <span class="form-help">Calibrated digital scale will verify on doorstep</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Item Operational Condition</label>
+            <div class="condition-options">
+              <label class="condition-option">
+                <input type="radio" name="condition" value="Working" style="display: none;">
+                <div class="condition-card">Working</div>
+              </label>
+              <label class="condition-option">
+                <input type="radio" name="condition" value="Partially Working" style="display: none;">
+                <div class="condition-card">Partially Working</div>
+              </label>
+              <label class="condition-option">
+                <input type="radio" name="condition" value="Not Working" checked style="display: none;">
+                <div class="condition-card">Not Working</div>
+              </label>
+              <label class="condition-option">
+                <input type="radio" name="condition" value="Damaged" style="display: none;">
+                <div class="condition-card">Damaged / Broken</div>
+              </label>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-primary btn-lg" onclick="goToStep(2)">
+              Next: Pickup Location <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Pickup Location -->
+      <div class="wizard-pane" id="pane-step-2" style="display: none;">
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label" for="address-input">Doorstep Address</label>
+            <input type="text" id="address-input" class="form-control" placeholder="House/Flat No., Building Name, Street Landmark" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="area-input">Area / Locality</label>
+              <input type="text" id="area-input" class="form-control" placeholder="e.g. Bellandur" value="Bellandur">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pincode-input">Postal Pincode</label>
+              <input type="text" id="pincode-input" class="form-control" placeholder="560103" value="560103">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="zone-select">City Zone</label>
+              <select id="zone-select" class="form-select">
+                <option value="Central Zone">Central Zone</option>
+                <option value="East Zone" selected>East Zone</option>
+                <option value="South Zone">South Zone</option>
+                <option value="North Zone">North Zone</option>
+                <option value="West Zone">West Zone</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Interactive Leaflet Draggable Pin Map -->
+          <div class="form-group">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <label class="form-label" style="margin: 0;">Pinpoint Pickup Location on Map</label>
+              <span id="coords-display" class="badge badge-leaf" style="font-size: 0.72rem;">GPS: 12.9299, 77.6744</span>
+            </div>
+            <div id="location-picker-map" style="height: 320px; width: 100%;"></div>
+            <span class="form-help"><i class="fas fa-hand-pointer"></i> Click anywhere on the map or drag the green marker to your exact building entrance.</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" onclick="goToStep(3)">
+              Next: Select Date & Time <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Schedule -->
+      <div class="wizard-pane" id="pane-step-3" style="display: none;">
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label" for="pickup-date-input">Preferred Pickup Date</label>
+            <input type="date" id="pickup-date-input" class="form-control" style="max-width: 320px;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Select Convenient Time Slot</label>
+            <div class="slot-grid">
+              <label class="slot-option">
+                <input type="radio" name="timeslot" value="09:00 AM – 12:00 PM" checked style="display: none;">
+                <div class="slot-card">
+                  <i class="far fa-sun"></i>
+                  <span>09:00 AM – 12:00 PM</span>
+                  <small>Morning Window</small>
+                </div>
+              </label>
+
+              <label class="slot-option">
+                <input type="radio" name="timeslot" value="12:00 PM – 03:00 PM" style="display: none;">
+                <div class="slot-card">
+                  <i class="fas fa-sun"></i>
+                  <span>12:00 PM – 03:00 PM</span>
+                  <small>Afternoon Window</small>
+                </div>
+              </label>
+
+              <label class="slot-option">
+                <input type="radio" name="timeslot" value="03:00 PM – 06:00 PM" style="display: none;">
+                <div class="slot-card">
+                  <i class="fas fa-cloud-sun"></i>
+                  <span>03:00 PM – 06:00 PM</span>
+                  <small>Evening Window</small>
+                </div>
+              </label>
+
+              <label class="slot-option">
+                <input type="radio" name="timeslot" value="06:00 PM – 08:00 PM" style="display: none;">
+                <div class="slot-card">
+                  <i class="fas fa-moon"></i>
+                  <span>06:00 PM – 08:00 PM</span>
+                  <small>Night Window</small>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="notes-input">Special Instructions for Collector (Optional)</label>
+            <textarea id="notes-input" class="form-control" rows="3" placeholder="e.g. Please ring bell 3B, security requires gate passcode 104"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <button type="button" class="btn btn-secondary" onclick="goToStep(2)">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" onclick="goToStep(4)">
+              Next: Review Request <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Review & Confirmation -->
+      <div class="wizard-pane" id="pane-step-4" style="display: none;">
+        <div class="review-summary-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.75rem;">Review & Confirm Collection</h2>
+            <span class="badge badge-leaf">READY FOR SMART ASSIGNMENT</span>
+          </div>
+
+          <div class="review-section">
+            <h4><i class="fas fa-laptop"></i> E-Waste Hardware</h4>
+            <div class="review-grid">
+              <div class="review-item">
+                <span>Category</span>
+                <strong id="rev-category">Laptop</strong>
+              </div>
+              <div class="review-item">
+                <span>Device & Quantity</span>
+                <strong id="rev-device">Dell Inspiron 15 (1 unit)</strong>
+              </div>
+              <div class="review-item">
+                <span>Estimated Weight</span>
+                <strong id="rev-weight">2.2 kg</strong>
+              </div>
+              <div class="review-item">
+                <span>Condition</span>
+                <strong id="rev-condition">Not Working</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <h4><i class="fas fa-map-marker-alt"></i> Doorstep Pickup Address</h4>
+            <div class="review-grid">
+              <div class="review-item" style="grid-column: 1 / -1;">
+                <span>Full Address & GPS</span>
+                <strong id="rev-address">42, Green Glen Layout, Bellandur, Metropolitan City - 560103</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <h4><i class="fas fa-calendar-alt"></i> Schedule Window</h4>
+            <div class="review-grid">
+              <div class="review-item">
+                <span>Pickup Window</span>
+                <strong id="rev-datetime">Tomorrow | 09:00 AM – 12:00 PM</strong>
+              </div>
+              <div class="review-item">
+                <span>Collector Protocol</span>
+                <strong>Digital Scale Calibration & Photo Proof</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="eco-points-preview">
+            <div>
+              <span class="badge badge-lavender" style="margin-bottom: 0.35rem;">GUARANTEED CITIZEN REWARD</span>
+              <h4 style="margin: 0; font-size: 1.15rem;">Estimated Eco Points for this Request</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Points are credited immediately upon verified scale weigh-in.</p>
+            </div>
+            <h3 id="rev-points">+50 Points</h3>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <button type="button" class="btn btn-secondary" onclick="goToStep(3)">
+              <i class="fas fa-arrow-left"></i> Modify Details
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" id="confirm-pickup-btn" onclick="submitPickupRequest()">
+              <i class="fas fa-check-circle"></i> Confirm Pickup & Assign Collector
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Smart Collector Assignment Success Modal -->
+  <div class="modal-overlay" id="assignment-success-modal">
+    <div class="modal-card">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--bg-mint); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem;">
+          <i class="fas fa-check"></i>
+        </div>
+        <span class="badge badge-leaf" style="font-size: 0.8rem;">PICKUP SCHEDULED</span>
+        <h2 style="font-size: 1.85rem; margin: 0.5rem 0 0.25rem;">Smart Collector Assigned!</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Request ID: <strong id="modal-req-id" style="color: var(--color-primary);">EC-2026-000124</strong>
+        </p>
+      </div>
+
+      <div style="background: var(--bg-surface-tint); border: 1.5px solid var(--border-accent); border-radius: var(--radius-lg); padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+        <img id="modal-col-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary);">
+        <div style="flex-grow: 1;">
+          <h4 id="modal-col-name" style="margin: 0 0 2px;">Rajesh Kumar</h4>
+          <span style="font-size: 0.8rem; color: var(--text-muted); display: block;" id="modal-col-vehicle">Eco Van (KA-03-EV-1044)</span>
+          <div style="display: flex; gap: 0.75rem; margin-top: 4px; font-size: 0.78rem;">
+            <strong style="color: #F59E0B;" id="modal-col-rating">★ 4.9 / 5.0</strong>
+            <span style="color: var(--text-muted);">•</span>
+            <span id="modal-col-distance">3.2 km away</span>
+            <span style="color: var(--text-muted);">•</span>
+            <span style="color: var(--color-primary); font-weight: 700;" id="modal-col-eta">~15 mins ETA</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 1.5rem;">
+        The collector has received your request and will arrive with a calibrated scale. You can track their live location.
+      </p>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-secondary btn-block" onclick="window.location.href='requests.html'">
+          View My Requests
+        </button>
+        <button class="btn btn-primary btn-block" id="modal-track-btn">
+          <i class="fas fa-location-arrow"></i> Track Pickup Live
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/ai-classification.js"></script>
+  <script src="../js/request.js"></script>
+</body>
+</html>
+

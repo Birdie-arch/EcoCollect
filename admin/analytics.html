@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Deep Dive — EcoCollect Admin</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/tables.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    .analytics-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .analytics-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-container-lg {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .analytics-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout" id="admin-analytics-view">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon" style="background: #14241B;"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag" style="background: var(--bg-surface-warm); color: var(--text-main);">CITY CONTROL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-chart-line"></i> <span>Overview</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="users.html"><i class="fas fa-users"></i> <span>Users</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="collectors.html"><i class="fas fa-truck-pickup"></i> <span>Collectors</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-clipboard-list"></i> <span>Pickup Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="analytics.html" class="active"><i class="fas fa-chart-pie"></i> <span>Analytics Deep Dive</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="recycling-centers.html"><i class="fas fa-map-marked-alt"></i> <span>City Map & Centers</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title">
+            <h1>Metropolitan Circular Economy Intelligence</h1>
+            <p>Comprehensive environmental metrics, recovery yields, and municipal sustainability reports.</p>
+          </div>
+        </div>
+
+        <div class="top-bar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">
+            <i class="fas fa-print"></i> Export Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Resource Recovery Impact Banner -->
+      <div style="background: linear-gradient(135deg, #1E5E3A 0%, #14442A 100%); color: #FFFFFF; border-radius: var(--radius-xl); padding: 2.25rem; margin-bottom: 2rem;">
+        <span class="badge" style="background: rgba(255,255,255,0.2); color: #FFF; margin-bottom: 0.5rem;">METROPOLITAN IMPACT AUDIT</span>
+        <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 0.5rem;">4,250 kg E-Waste Processed to Date</h2>
+        <p style="color: #D1EBD6; font-size: 0.95rem; max-width: 650px; margin-bottom: 1.5rem;">
+          Through doorstep collections and certified recycling centers, toxic heavy metals are neutralized and precious secondary raw materials re-enter the production cycle.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
+          <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-display);">6,120 kg</div>
+            <span style="font-size: 0.75rem; color: #D1EBD6;">CO₂ Equivalent Averted</span>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-display);">278 Trees</div>
+            <span style="font-size: 0.75rem; color: #D1EBD6;">Annual Absorption Equiv.</span>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-display);">340 kg</div>
+            <span style="font-size: 0.75rem; color: #D1EBD6;">Toxic Lead & Cadmium Isolated</span>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-display);">185 g</div>
+            <span style="font-size: 0.75rem; color: #D1EBD6;">Precious Gold & Silver Recovered</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 1 -->
+      <div class="analytics-grid-2">
+        <div class="card">
+          <div class="section-header">
+            <h3><i class="fas fa-chart-line" style="color: var(--color-primary);"></i> Monthly Growth & Projections (kg)</h3>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="chart-monthly-trend"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3><i class="fas fa-chart-pie" style="color: var(--color-accent-lavender);"></i> Material Category Distribution</h3>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="chart-categories"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 2 -->
+      <div class="analytics-grid-3">
+        <div class="card">
+          <div class="section-header">
+            <h3 style="font-size: 1.1rem;"><i class="fas fa-tasks" style="color: var(--color-amber);"></i> Intake Pipeline Funnel</h3>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="chart-request-status"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3 style="font-size: 1.1rem;"><i class="fas fa-trophy" style="color: var(--color-primary);"></i> Fleet Efficiency Metrics</h3>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="chart-collector-perf"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3 style="font-size: 1.1rem;"><i class="fas fa-map-marked-alt" style="color: var(--color-primary);"></i> Regional Intake by Zone</h3>
+          </div>
+          <div class="chart-container-lg">
+            <canvas id="chart-city-zones"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/analytics.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
+

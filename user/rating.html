@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Collection — EcoCollect</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+
+  <style>
+    .rating-container-card {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .criteria-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="nav-logo-icon"><i class="fas fa-leaf"></i></div>
+          <div>
+            <h3>EcoCollect</h3>
+            <span class="tag">CITIZEN PORTAL</span>
+          </div>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="request.html"><i class="fas fa-calendar-plus"></i> <span>Request Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="requests.html"><i class="fas fa-list-alt"></i> <span>My Requests</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="tracking.html"><i class="fas fa-location-arrow"></i> <span>Track Pickup</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rating.html" class="active"><i class="fas fa-star"></i> <span>Ratings & Feedback</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="rewards.html"><i class="fas fa-gift"></i> <span>Eco Rewards</span></a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="profile.html"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-block btn-sm" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="rating-container-card">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <span class="badge badge-leaf" style="margin-bottom: 0.5rem;">SERVICE EVALUATION</span>
+          <h2 style="font-size: 2.1rem; margin-bottom: 0.4rem;">How was your collection experience?</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Your feedback ensures high standards of field professionalism and safe e-waste handling.
+          </p>
+        </div>
+
+        <!-- Collector Mini Card -->
+        <div style="background: var(--bg-surface-tint); border: 1.5px solid var(--border-accent); border-radius: var(--radius-lg); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-mint); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div>
+              <h4 id="rating-collector-name" style="margin: 0 0 2px;">Rajesh Kumar</h4>
+              <span id="rating-collector-vehicle" style="font-size: 0.8rem; color: var(--text-muted);">Eco Van (KA-03-EV-1044)</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Request ID</span>
+            <strong id="rating-req-id" style="display: block; color: var(--color-primary);">EC-2026-000124</strong>
+          </div>
+        </div>
+
+        <!-- Overall Rating Stars -->
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+          <label style="display: block; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--text-main);">
+            Overall Collection Rating
+          </label>
+          <div class="star-rating" data-field="overall" id="star-overall">
+            <span class="star" data-val="1">★</span>
+            <span class="star" data-val="2">★</span>
+            <span class="star" data-val="3">★</span>
+            <span class="star" data-val="4">★</span>
+            <span class="star" data-val="5">★</span>
+          </div>
+        </div>
+
+        <!-- Sub-criteria Evaluation Rows -->
+        <div style="margin-bottom: 2rem;">
+          <h4 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--text-main);">Performance Dimensions</h4>
+          
+          <div class="criteria-row">
+            <div>
+              <strong>Pickup Punctuality</strong><br>
+              <small style="color: var(--text-muted);">Arrival within designated time slot</small>
+            </div>
+            <div class="star-rating" data-field="punctuality" style="font-size: 1.25rem;">
+              <span class="star" data-val="1">★</span>
+              <span class="star" data-val="2">★</span>
+              <span class="star" data-val="3">★</span>
+              <span class="star" data-val="4">★</span>
+              <span class="star" data-val="5">★</span>
+            </div>
+          </div>
+
+          <div class="criteria-row">
+            <div>
+              <strong>Collector Professionalism</strong><br>
+              <small style="color: var(--text-muted);">Respectful attitude & uniform identification</small>
+            </div>
+            <div class="star-rating" data-field="professionalism" style="font-size: 1.25rem;">
+              <span class="star" data-val="1">★</span>
+              <span class="star" data-val="2">★</span>
+              <span class="star" data-val="3">★</span>
+              <span class="star" data-val="4">★</span>
+              <span class="star" data-val="5">★</span>
+            </div>
+          </div>
+
+          <div class="criteria-row">
+            <div>
+              <strong>Communication</strong><br>
+              <small style="color: var(--text-muted);">Proactive SMS/call updates prior to arrival</small>
+            </div>
+            <div class="star-rating" data-field="communication" style="font-size: 1.25rem;">
+              <span class="star" data-val="1">★</span>
+              <span class="star" data-val="2">★</span>
+              <span class="star" data-val="3">★</span>
+              <span class="star" data-val="4">★</span>
+              <span class="star" data-val="5">★</span>
+            </div>
+          </div>
+
+          <div class="criteria-row">
+            <div>
+              <strong>Collection Process</strong><br>
+              <small style="color: var(--text-muted);">Digital scale weighing & safe package handling</small>
+            </div>
+            <div class="star-rating" data-field="process" style="font-size: 1.25rem;">
+              <span class="star" data-val="1">★</span>
+              <span class="star" data-val="2">★</span>
+              <span class="star" data-val="3">★</span>
+              <span class="star" data-val="4">★</span>
+              <span class="star" data-val="5">★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Written Comments -->
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label class="form-label" for="rating-comment-input">Written Feedback / Comments</label>
+          <textarea id="rating-comment-input" class="form-control" rows="3" placeholder="Collector arrived on time and handled the electronic devices properly. Digital scale showed exact weight."></textarea>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block btn-lg" onclick="submitCollectorRating()">
+          <i class="fas fa-paper-plane"></i> Submit Rating & Record Eco Points
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/rating.js"></script>
+</body>
+</html>
+

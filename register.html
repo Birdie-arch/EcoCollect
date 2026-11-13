@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — EcoCollect</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-split-wrapper">
+    <!-- Left Illustrated Brand Side -->
+    <div class="auth-brand-side">
+      <div class="auth-brand-header">
+        <div class="icon"><i class="fas fa-leaf"></i></div>
+        <span>EcoCollect</span>
+      </div>
+
+      <div class="auth-hero-content">
+        <span class="auth-pill-tag">
+          <i class="fas fa-award"></i> Welcome Reward
+        </span>
+        <h2>Join the Green Metropolitan Movement.</h2>
+        <p>
+          Create an account and receive <strong>100 complimentary Eco Points</strong> immediately. Safely recycle computers, appliances, and batteries.
+        </p>
+      </div>
+
+      <div class="auth-testimonials-box">
+        <div style="font-size: 1.75rem; color: #82C98C;"><i class="fas fa-seedling"></i></div>
+        <div>
+          <h5 style="color: #FFFFFF; font-size: 0.95rem; margin-bottom: 2px;">Certified Urban Sustainability</h5>
+          <p>Every pickup is tracked with weight calibration and routed directly to licensed e-waste recovery centers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Side -->
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <div class="auth-card-header">
+          <a href="index.html" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem; margin-bottom: 1.5rem;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+          <h1>Create an Account</h1>
+          <p>Choose your account type to get started with EcoCollect.</p>
+        </div>
+
+        <!-- Role Selector Tabs -->
+        <div class="role-tabs">
+          <button type="button" class="role-tab active" id="tab-user" onclick="switchRegRole('USER')">
+            <i class="fas fa-user"></i> Citizen
+          </button>
+          <button type="button" class="role-tab" id="tab-collector" onclick="switchRegRole('COLLECTOR')">
+            <i class="fas fa-truck-pickup"></i> Collector
+          </button>
+          <button type="button" class="role-tab" id="tab-admin" onclick="switchRegRole('ADMIN')">
+            <i class="fas fa-shield-alt"></i> Admin
+          </button>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="register-form">
+          <input type="hidden" id="reg-role" value="USER">
+
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Maya Krishnan" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Create a password (min. 6 characters)" minlength="6" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number</label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="+91 98450 00000" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-zone">Metropolitan Zone</label>
+            <select id="reg-zone" class="form-select">
+              <option value="Central Zone">Central Zone</option>
+              <option value="East Zone">East Zone (Whitefield, Indiranagar)</option>
+              <option value="South Zone">South Zone (Koramangala, HSR)</option>
+              <option value="North Zone">North Zone (Hebbal, Malleshwaram)</option>
+              <option value="West Zone">West Zone (Rajajinagar, Peenya)</option>
+            </select>
+          </div>
+
+          <!-- Collector Specific Field -->
+          <div class="form-group" id="collector-vehicle-group" style="display: none;">
+            <label class="form-label" for="reg-vehicle">Vehicle Details / Registration</label>
+            <input type="text" id="reg-vehicle" class="form-control" placeholder="e.g. Electric Cargo Van (KA-04-EV-9900)">
+          </div>
+
+          <!-- Citizen Specific Field -->
+          <div class="form-group" id="user-address-group">
+            <label class="form-label" for="reg-address">Pickup Address</label>
+            <input type="text" id="reg-address" class="form-control" placeholder="Flat / House No., Street, Landmark">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="reg-submit-btn">
+            <i class="fas fa-check-circle"></i> Complete Registration
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="login.html">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function switchRegRole(role) {
+      document.getElementById('reg-role').value = role;
+      const tabUser = document.getElementById('tab-user');
+      const tabCol = document.getElementById('tab-collector');
+      const tabAdm = document.getElementById('tab-admin');
+      const vGroup = document.getElementById('collector-vehicle-group');
+      const aGroup = document.getElementById('user-address-group');
+
+      [tabUser, tabCol, tabAdm].forEach(t => t.classList.remove('active'));
+
+      if (role === 'USER') {
+        tabUser.classList.add('active');
+        vGroup.style.display = 'none';
+        aGroup.style.display = 'block';
+      } else if (role === 'COLLECTOR') {
+        tabCol.classList.add('active');
+        vGroup.style.display = 'block';
+        aGroup.style.display = 'none';
+      } else if (role === 'ADMIN') {
+        tabAdm.classList.add('active');
+        vGroup.style.display = 'none';
+        aGroup.style.display = 'none';
+      }
+    }
+
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const role = document.getElementById('reg-role').value;
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const phone = document.getElementById('reg-phone').value.trim();
+      const zone = document.getElementById('reg-zone').value;
+      const address = document.getElementById('reg-address').value.trim();
+      const vehicle = document.getElementById('reg-vehicle').value.trim();
+
+      const btn = document.getElementById('reg-submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Creating Account...`;
+
+      setTimeout(() => {
+        const result = register({
+          name, email, password, phone, role, zone, address, vehicle
+        });
+
+        if (result.success) {
+          showToast('Account Created', `Welcome to EcoCollect, ${name}!`, 'success');
+          setTimeout(() => {
+            window.location.href = result.redirect;
+          }, 400);
+        } else {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fas fa-check-circle"></i> Complete Registration`;
+          showToast('Registration Error', result.error, 'error');
+        }
+      }, 400);
+    });
+  </script>
+</body>
+</html>
