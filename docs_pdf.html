@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoCollect — Project Documentation & Technical Overview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    @page {
+      size: A4;
+      margin: 1.6cm 1.4cm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1E2922;
+      background-color: #FFFFFF;
+      line-height: 1.6;
+      font-size: 10.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #14241B;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    /* Cover / Header Banner */
+    .header-banner {
+      background: linear-gradient(135deg, #FAF7F0 0%, #EBF5ED 60%, #F4EFEB 100%);
+      border: 1.5px solid #C7DFCA;
+      border-radius: 16px;
+      padding: 26px 28px;
+      margin-bottom: 24px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .brand-title {
+      font-size: 24pt;
+      color: #1E5E3A;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      background: #1E5E3A;
+      color: #FFFFFF;
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .header-sub {
+      font-size: 11pt;
+      color: #34473B;
+      margin-bottom: 16px;
+      max-width: 90%;
+    }
+
+    /* Links Callout Box */
+    .links-box {
+      background: #FFFFFF;
+      border: 1.5px solid #1E5E3A;
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(30, 94, 58, 0.08);
+    }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10pt;
+    }
+
+    .link-label {
+      font-weight: 700;
+      color: #14241B;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-url {
+      color: #1E5E3A;
+      font-weight: 600;
+      text-decoration: none;
+      background: #EBF5ED;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid #C7DFCA;
+      font-family: monospace;
+      font-size: 9.5pt;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 22px;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 14pt;
+      color: #1E5E3A;
+      border-bottom: 2px solid #E5DFC9;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background-color: #82C98C;
+      border-radius: 4px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      color: #2D3D32;
+    }
+
+    /* Tech Stack Grid */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .tech-card {
+      background: #FAF7F0;
+      border: 1px solid #E5DFC9;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tech-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .tech-name {
+      font-weight: 700;
+      font-size: 10.5pt;
+      color: #14241B;
+    }
+
+    .tech-tag {
+      font-size: 7.5pt;
+      font-weight: 700;
+      background: #8B6CE0;
+      color: #FFFFFF;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .tech-desc {
+      font-size: 9pt;
+      color: #5C6E61;
+      line-height: 1.45;
+    }
+
+    /* Workflow Cards */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .workflow-card {
+      background: #FFFFFF;
+      border: 1.5px solid #C7DFCA;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .workflow-card h4 {
+      font-size: 11pt;
+      color: #1E5E3A;
+      margin-bottom: 6px;
+    }
+
+    .workflow-card ul {
+      padding-left: 16px;
+      font-size: 8.8pt;
+      color: #34473B;
+      line-height: 1.5;
+    }
+
+    /* Formula Box */
+    .formula-box {
+      background: #FAF7F0;
+      border-left: 4px solid #1E5E3A;
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      margin: 12px 0;
+      font-size: 9.2pt;
+    }
+
+    .formula-title {
+      font-weight: 700;
+      color: #14241B;
+      margin-bottom: 4px;
+    }
+
+    .code-pill {
+      font-family: monospace;
+      background: #EBF5ED;
+      color: #1E5E3A;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* Footer */
+    .doc-footer {
+      border-top: 1px solid #E5DFC9;
+      padding-top: 10px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8pt;
+      color: #647B6C;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover & Header -->
+  <div class="header-banner">
+    <div class="brand-row">
+      <div class="brand-title">
+        <span>🌱 EcoCollect</span>
+      </div>
+      <div class="brand-badge">Official Technical Whitepaper</div>
+    </div>
+    <div class="header-sub">
+      Smart Metropolitan Electronic Waste Collection & Circular Resource Recovery Platform.
+    </div>
+
+    <!-- Official Live Links -->
+    <div class="links-box">
+      <div class="link-row">
+        <span class="link-label">🌐 Live Website Deployment (GitHub Pages):</span>
+        <a class="link-url" href="https://birdie-arch.github.io/EcoCollect/">https://birdie-arch.github.io/EcoCollect/</a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">📂 Source Code Repository (GitHub):</span>
+        <a class="link-url" href="https://github.com/Birdie-arch/EcoCollect">https://github.com/Birdie-arch/EcoCollect</a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">👤 Maintainer / Organization:</span>
+        <span class="link-url">Birdie-arch (kaamyaofficial@gmail.com)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: Executive Overview -->
+  <div class="section">
+    <h2 class="section-title">1. Executive Overview</h2>
+    <p>
+      <strong>EcoCollect</strong> is a modern, responsive, circular-economy web application designed for metropolitan smart cities. Electronic waste (e-waste)—including discarded laptops, smartphones, flat-screen televisions, lithium batteries, and cooling appliances—is the world's fastest-growing domestic waste stream. When disposed of improperly in informal landfills, it leaches neurotoxins such as lead, mercury, and cadmium into groundwater, while wasting metric tons of recoverable critical minerals (gold, copper, lithium, and rare-earth elements).
+    </p>
+    <p>
+      EcoCollect resolves this systemic crisis by connecting citizens directly with certified green-fleet collection agents and licensed recycling hubs through an intuitive digital lifecycle: <strong>Request ➔ AI Classification ➔ Smart Assignment ➔ Real-Time Telemetry Tracking ➔ Scale Weigh-in Verification ➔ Two-Way Ratings ➔ Eco Points Rewards</strong>.
+    </p>
+  </div>
+
+  <!-- Section 2: Full Technology Stack -->
+  <div class="section">
+    <h2 class="section-title">2. Complete Technology Stack</h2>
+    <p>
+      The frontend has been engineered entirely with pure web standards to ensure zero framework lock-in, lightning-fast rendering, cross-browser compatibility, and seamless hosting on static edge environments like GitHub Pages.
+    </p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">HTML5 & Semantic Structure</span>
+          <span class="tech-tag">Markup</span>
+        </div>
+        <p class="tech-desc">Semantic document outline, accessible forms, camera input integration, and responsive viewport optimization.</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">CSS3 & Custom Design System</span>
+          <span class="tech-tag">Styling</span>
+        </div>
+        <p class="tech-desc">Inspired by botanical warm-paper aesthetics (#FAF7F0 base, deep forest green #1E5E3A, sage accents, lavender pill buttons). Uses CSS Grid, Flexbox, and media queries.</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">Vanilla ES6+ JavaScript</span>
+          <span class="tech-tag">Logic Engine</span>
+        </div>
+        <p class="tech-desc">Pure modern modular JavaScript without React, Angular, or Vue. Clean separation between data persistence, UI controllers, and algorithms.</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">Leaflet.js & OpenStreetMap</span>
+          <span class="tech-tag">Mapping & GPS</span>
+        </div>
+        <p class="tech-desc">Interactive cartography, custom SVG pin markers, doorstep draggable picker, polyline route drawing, and simulated live telemetry motion.</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">Chart.js Visualizations</span>
+          <span class="tech-tag">Analytics</span>
+        </div>
+        <p class="tech-desc">Dynamic charts: Monthly intake trend (Area), category composition (Doughnut), request funnel (Bar), fleet performance, and zone distribution.</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-card-header">
+          <span class="tech-name">HTML5 LocalStorage Engine</span>
+          <span class="tech-tag">Persistence</span>
+        </div>
+        <p class="tech-desc">Robust client-side database layer with unified CRUD functions (saveData, getData, updateData, deleteData) and realistic seed datasets.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Section 3: User Roles & System Architecture -->
+  <div class="section">
+    <h2 class="section-title">3. User Roles & Core Workflows</h2>
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <h4>Citizen / Household</h4>
+        <ul>
+          <li>Create clean personal account</li>
+          <li>Schedule doorstep e-waste collection</li>
+          <li>AI-powered photo classification</li>
+          <li>Pinpoint doorstep on interactive map</li>
+          <li>Live 7-step telemetry tracking</li>
+          <li>Two-way 5-star collector rating</li>
+          <li>Earn & redeem Eco Points for vouchers</li>
+        </ul>
+      </div>
+
+      <div class="workflow-card">
+        <h4>Collector Field Fleet</h4>
+        <ul>
+          <li>Status toggle (Available, Busy, Offline)</li>
+          <li>Review assigned pickup queue</li>
+          <li>Accept / decline route requests</li>
+          <li>Turn-by-turn map directions</li>
+          <li>Calibrated scale weight recording</li>
+          <li>Attach photographic collection proof</li>
+          <li>Rate citizen readiness & cooperation</li>
+        </ul>
+      </div>
+
+      <div class="workflow-card">
+        <h4>Municipal Admin</h4>
+        <ul>
+          <li>City-wide real-time KPI overview</li>
+          <li>5 Chart.js dynamic visualisations</li>
+          <li>Citizen & collector account management</li>
+          <li>Multi-filter request ledger inspection</li>
+          <li>Manual collector route reassignment</li>
+          <li>Directory of 10 certified recycling hubs</li>
+          <li>Metropolitan high-demand map view</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Key Algorithms & Technical Innovations -->
+  <div class="section">
+    <h2 class="section-title">4. Key Algorithms & Technical Innovations</h2>
+
+    <div class="formula-box">
+      <div class="formula-title">A. Smart Collector Dynamic Assignment Algorithm</div>
+      When a citizen schedules a collection, the engine runs a multi-factor ranking formula:
+      <br>
+      <span class="code-pill">CollectorScore = S(Category) + S(Distance) + S(Rating) + S(Workload) + S(Availability)</span>
+      <br>
+      • <strong>Category Stream Match (35 pts):</strong> Ensures the collector's fleet vehicle (e.g. E-Cargo Bike vs Heavy EV Truck) supports the hardware.
+      <br>
+      • <strong>Proximity via Haversine Distance (up to 25 pts):</strong> Computes exact spherical distance (km) between doorstep coordinates and collector coordinates.
+      <br>
+      • <strong>Rating Score (up to 20 pts):</strong> Rewards operators with proven high satisfaction scores.
+      <br>
+      • <strong>Workload Load Balancing (up to 15 pts):</strong> Prioritizes available operators with fewer pending jobs to prevent urban bottlenecks.
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">B. Real-Time Telemetry & Route Simulation</div>
+      A visual 7-step progress stepper (<span class="code-pill">REQUESTED ➔ ASSIGNED ➔ ACCEPTED ➔ ON_THE_WAY ➔ ARRIVED ➔ COLLECTED ➔ COMPLETED</span>) paired with Leaflet.js. The collector vehicle smoothly animates along the street grid towards the citizen's doorstep while updating the live arrival ETA countdown.
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">C. Environmental Footprint & Eco Points Economy</div>
+      • <strong>Carbon Offset:</strong> Every 1 kg of e-waste recycled prevents 1.44 kg of CO₂ equivalent emissions.
+      <br>
+      • <strong>Tree Absorption Equivalent:</strong> Benchmark of 22 kg CO₂ annual absorption per native urban tree.
+      <br>
+      • <strong>Landfill Protection:</strong> 0.08 kg of hazardous heavy metals diverted per kilogram processed.
+      <br>
+      • <strong>Rewards Catalog:</strong> Citizens redeem points for transit passes, organic grocery vouchers, and native tree planting certificates.
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">D. AI E-Waste Image Classification (EcoVision Model Prototype)</div>
+      Users can drag-and-drop or select an image of their item. The neural vision inference simulation identifies the hardware category, surface wear, and potential hazardous components (e.g. Lithium-Ion, Mercury CCFL), automatically populating form fields.
+    </div>
+  </div>
+
+  <!-- Section 5: Project Structure & Future Backend Integration -->
+  <div class="section">
+    <h2 class="section-title">5. Directory Structure & Backend Handoff</h2>
+    <p>
+      The project structure separates concerns cleanly so that a backend (Node.js/Express, Python/FastAPI, or Go) and relational database (PostgreSQL) can be plugged in without refactoring the presentation layer:
+    </p>
+    <div style="font-family: monospace; font-size: 8.5pt; background: #FAF7F0; border: 1px solid #E5DFC9; padding: 10px; border-radius: 8px; line-height: 1.4;">
+      EcoCollect/<br>
+      ├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Landing page with hero workflow, stats, and testimonials<br>
+      ├── login.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Dynamic session login with role verification<br>
+      ├── register.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Multi-role registration (Citizen, Collector, Admin)<br>
+      ├── user/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Citizen dashboard, request wizard, tracking, rating, rewards<br>
+      ├── collector/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Fleet operator portal, pickup management, scale calibration<br>
+      ├── admin/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Municipal dashboard, 5 Chart.js charts, recycling hubs directory<br>
+      ├── css/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Organized stylesheets (style, auth, dashboard, forms, tables, responsive)<br>
+      ├── js/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Modular engines (storage, auth, app, map, request, tracking, rating, rewards)<br>
+      └── README.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Complete architectural guide and setup instructions
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>EcoCollect — Smart Metropolitan E-Waste Collection Platform</span>
+    <span>Live: https://birdie-arch.github.io/EcoCollect/</span>
+    <span>Repository: https://github.com/Birdie-arch/EcoCollect</span>
+  </div>
+
+</body>
+</html>
