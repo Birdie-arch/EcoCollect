@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Arrow marker pointing right/forward -->
+    <marker id="arrow-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#000000" />
+    </marker>
+    <!-- Arrow marker pointing left/backward -->
+    <marker id="arrow-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 10 1.5 L 0 5 L 10 8.5 z" fill="#000000" />
+    </marker>
+  </defs>
+
+  <style>
+    .layer-title { font-size: 20px; font-weight: 700; fill: #000000; text-anchor: middle; }
+    .layer-subtitle { font-size: 16px; font-weight: 700; fill: #000000; text-anchor: middle; }
+    .box-title { font-size: 18px; font-weight: 700; fill: #000000; text-anchor: middle; }
+    .box-text { font-size: 15px; font-weight: 600; fill: #000000; text-anchor: middle; }
+    .sub-text { font-size: 12px; font-weight: 400; fill: #444444; text-anchor: middle; }
+    .outer-rect { fill: #ffffff; stroke: #000000; stroke-width: 1.8; }
+    .inner-rect { fill: #ffffff; stroke: #000000; stroke-width: 1.6; }
+    .connector { stroke: #000000; stroke-width: 1.6; fill: none; }
+  </style>
+
+  <!-- ================= TOP HEADERS ================= -->
+  <!-- Column 1: Presentation Layer -->
+  <text x="330" y="34" class="layer-title">Presentation Layer</text>
+  <text x="330" y="55" class="layer-subtitle">(Frontend)</text>
+
+  <!-- Column 2: Logical Layer -->
+  <text x="640" y="34" class="layer-title">Logical Layer</text>
+  <text x="640" y="55" class="layer-subtitle">(Backend)</text>
+
+  <!-- Column 3: Data Layer -->
+  <text x="950" y="44" class="layer-title">Data Layer</text>
+
+  <!-- ================= ACTORS (LEFT) ================= -->
+  <!-- Application Users Box -->
+  <rect x="25" y="145" width="135" height="70" class="inner-rect" />
+  <text x="92.5" y="174" class="box-text">Application</text>
+  <text x="92.5" y="196" class="box-text">Users</text>
+
+  <!-- Application Admins Box -->
+  <rect x="25" y="245" width="135" height="70" class="inner-rect" />
+  <text x="92.5" y="274" class="box-text">Application</text>
+  <text x="92.5" y="296" class="box-text">Admins</text>
+
+  <!-- ================= COLUMN 1: PRESENTATION LAYER ================= -->
+  <!-- Large Outer Box: Web Application -->
+  <rect x="200" y="75" width="260" height="435" class="outer-rect" />
+  <text x="330" y="112" class="box-title">Web Application</text>
+  <text x="330" y="130" class="sub-text">(HTML5 / CSS3 / ES6+)</text>
+
+  <!-- Inner Box: Page Layouts Container -->
+  <rect x="225" y="145" width="210" height="110" class="inner-rect" />
+  <text x="330" y="188" class="box-text">Page Layouts</text>
+  <text x="330" y="210" class="sub-text">(Citizen • Collector • Admin)</text>
+  <text x="330" y="228" class="sub-text">Multi-Step Booking Wizard</text>
+
+  <!-- Inner Box 2: Leaflet.js -->
+  <rect x="225" y="275" width="210" height="95" class="inner-rect" />
+  <text x="330" y="315" class="box-text">Leaflet.js</text>
+  <text x="330" y="337" class="sub-text">OpenStreetMap &amp; GPS Telemetry</text>
+
+  <!-- Inner Box 3: Chart.js -->
+  <rect x="225" y="388" width="210" height="95" class="inner-rect" />
+  <text x="330" y="428" class="box-text">Chart.js</text>
+  <text x="330" y="450" class="sub-text">City Analytics &amp; Visualizations</text>
+
+  <!-- ================= COLUMN 2: LOGICAL LAYER ================= -->
+  <!-- Large Outer Box: Node.js / Express -->
+  <rect x="510" y="75" width="260" height="435" class="outer-rect" />
+  <text x="640" y="112" class="box-title">Node.js / Express</text>
+  <text x="640" y="130" class="sub-text">(Business Logic Controllers)</text>
+
+  <!-- Inner Services Box -->
+  <rect x="535" y="145" width="210" height="338" class="inner-rect" />
+
+  <!-- Sub Service 1: Smart Assignment -->
+  <rect x="550" y="160" width="180" height="66" class="inner-rect" />
+  <text x="640" y="188" class="box-text">Smart Assignment</text>
+  <text x="640" y="208" class="sub-text">Haversine &amp; Workload Scoring</text>
+
+  <!-- Sub Service 2: Telemetry & Status Controller -->
+  <rect x="550" y="240" width="180" height="66" class="inner-rect" />
+  <text x="640" y="268" class="box-text">Telemetry &amp; Tracking</text>
+  <text x="640" y="288" class="sub-text">7-Stage Stepper &amp; ETA</text>
+
+  <!-- Sub Service 3: Security & Auth -->
+  <rect x="550" y="320" width="180" height="66" class="inner-rect" />
+  <text x="640" y="348" class="box-text">Role-Based Auth (RBAC)</text>
+  <text x="640" y="368" class="sub-text">Session &amp; Access Security</text>
+
+  <!-- Sub Service 4: Points & Rating Engine -->
+  <rect x="550" y="400" width="180" height="66" class="inner-rect" />
+  <text x="640" y="428" class="box-text">Eco Points &amp; Rating</text>
+  <text x="640" y="448" class="sub-text">Impact &amp; 2-Way Reviews</text>
+
+  <!-- ================= COLUMN 3: DATA LAYER ================= -->
+  <!-- Large Outer Box: Data Layer -->
+  <rect x="820" y="75" width="260" height="435" class="outer-rect" />
+
+  <!-- Data Box 1: Firebase Cloud Storage -->
+  <rect x="850" y="125" width="200" height="105" class="inner-rect" />
+  <text x="950" y="162" class="box-text">Firebase</text>
+  <text x="950" y="184" class="box-text">Cloud Storage</text>
+  <text x="950" y="206" class="sub-text">(Device &amp; Scale Proof Photos)</text>
+
+  <!-- Data Box 2: PostgreSQL + PostGIS -->
+  <rect x="850" y="275" width="200" height="115" class="inner-rect" />
+  <text x="950" y="314" class="box-text">PostgreSQL</text>
+  <text x="950" y="337" class="box-text">+</text>
+  <text x="950" y="359" class="box-text">PostGIS</text>
+  <text x="950" y="378" class="sub-text">(Geospatial Ledger &amp; Users)</text>
+
+  <!-- Data Box 3: HTML5 LocalStorage Engine (Prototype Store) -->
+  <rect x="850" y="415" width="200" height="70" class="inner-rect" style="stroke-dasharray: 4,3;" />
+  <text x="950" y="443" class="box-text" style="font-size: 13.5px;">HTML5 LocalStorage</text>
+  <text x="950" y="465" class="sub-text">(Unified Client Prototype Store)</text>
+
+  <!-- ================= TWO-WAY ARROWS ================= -->
+  <!-- Actor 1 <-> Presentation Layer (Page Layouts) -->
+  <line x1="160" y1="180" x2="223" y2="195" class="connector" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+
+  <!-- Actor 2 <-> Presentation Layer (Page Layouts) -->
+  <line x1="160" y1="280" x2="223" y2="210" class="connector" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+
+  <!-- Presentation Layer <-> Logical Layer -->
+  <line x1="435" y1="200" x2="533" y2="270" class="connector" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+
+  <!-- Logical Layer <-> Firebase Cloud Storage -->
+  <line x1="745" y1="260" x2="848" y2="185" class="connector" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+
+  <!-- Logical Layer <-> PostgreSQL + PostGIS -->
+  <line x1="745" y1="330" x2="848" y2="345" class="connector" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+
+</svg>
